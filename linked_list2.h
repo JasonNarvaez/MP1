@@ -15,7 +15,8 @@ typedef struct Node Node;
 typedef struct MemoryPool MemoryPool;
 
 MemoryPool* Tiers;
-
+int tier_size = 0;
+int tier_t;//global t given by the main or user
 
 struct Node {		//Each node is 8 bytes max
  	Node *next;
