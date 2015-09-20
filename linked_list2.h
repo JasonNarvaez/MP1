@@ -1,6 +1,7 @@
 #ifndef _linked_list2_h_                   // include file only once
 #define _linked_list2_h_
 #include <limits.h>
+#include <vector>
 
 void 	Init (int M, int b, int t); // initializes the linked list, should be called once from the main
 void 	Destroy (); 		 //	destroys the linked list and cleans resources
@@ -15,30 +16,41 @@ void 	PrintList ();		// prints the entire list by following the next pointers. P
 typedef struct Node Node;
 typedef struct MemoryPool MemoryPool;
 
-MemoryPool* Tiers;
+vector<MemoryPool> Tiers;
 int tier_size = 0;
 int tier_t;//global t given by the main or user
+
 
 struct Node {		//Each node is 8 bytes max
  	Node *next;
 	
 	//payload
 	int key;     	//4-bytes
-	char* value;    	//variable length
+	//char* value;    	//variable length
+	void* value;
 	int value_len;
 };
 
 struct MemoryPool{
 	
+	MemoryPool(): b(128), M(128*4){}
+	
 	Node* mempool;
 	Node* free_pointer;
 	Node* head;
 	Node* trailer;
+	
+	void set_b(int B){ b = B; }
+	void set_M(int m){ M = m; }
+	int get_b(){ return b; }
+	int get_M(){ return M; }
+	
+	private:
 	int b;
 	int M;
 	
 	
-}MP;
+};
 
 
 
