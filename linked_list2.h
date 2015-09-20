@@ -1,5 +1,6 @@
 #ifndef _linked_list2_h_                   // include file only once
 #define _linked_list2_h_
+#include <limits.h>
 
 void 	Init (int M, int b, int t); // initializes the linked list, should be called once from the main
 void 	Destroy (); 		 //	destroys the linked list and cleans resources
