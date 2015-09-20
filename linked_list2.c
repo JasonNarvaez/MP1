@@ -4,7 +4,7 @@
 
 void Init(int M, int b, int t){
 	Tiers = (MemoryPool*)malloc(t);
-
+	tier_t = t;//global variable for t
 	MemoryPool* current = Tiers;//start at the beginning
 
 	int i = 0;
@@ -17,6 +17,7 @@ void Init(int M, int b, int t){
 		current->trailer = current->head + M;
 
 		current++;
+		tier_size++;
 
 	}
 }
