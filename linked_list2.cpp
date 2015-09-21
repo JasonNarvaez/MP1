@@ -69,41 +69,43 @@ int 	Insert (int key,char * value_ptr, int value_len){
 	//if(tier_placement < tier_t) printf("TRUE2\n");
 	if(tier_placement >= 0 &&  tier_placement < tier_t){//needs to check for available space within tier
 	
-		MemoryPool current = Tiers[0];//point to the first tier
+		//MemoryPool current = Tiers[0];//point to the first tier
 		
 		//printf("\nb: %d\n",current->b);
 		//printf("current free pointer: %d\n",current.free_pointer);
 		//printf("current free pointer next: %d\n",current.free_pointer->next);
 		
-		current = Tiers[tier_placement];//current now points to the tier where we will insert the node
+		MemoryPool &current = Tiers[tier_placement];//current now points to the tier where we will insert the node
 		//printf("tier: %d\n",tier_placement);
 		//printf("b: %d\n",current->b);
 		
 		if(value_len<=current.get_b()){
+			Node* tempNode = current.free_pointer;
+			
 			char temp[current.get_b()-16];
-			printf("before key assignment\n\n");
+			//printf("before key assignment\n\n");
 			//if(current->free_pointer) printf("free pointer not NULL!\n\n");
 			
 			
-			current.free_pointer->key = key;//segfault
-			current.free_pointer->value_len = value_len;
-			printf("done deed\n");
+			tempNode->key = key;//segfault
+			tempNode->value_len = value_len;
+			//printf("done deed\n");
 			
-			current.free_pointer->value = temp;
+			tempNode->value = temp;
 			
-			memcpy(current.free_pointer->value,value_ptr, value_len);//copy value_len elements from value_ptr to MP.value
+			memcpy(tempNode->value,value_ptr, value_len);//copy value_len elements from value_ptr to MP.value
 			//printf("b: %d\n",current.get_b());
 			
-			//printf("current free pointer: %d\n",current.free_pointer);
-			//printf("current free pointer next: %d\n",current.free_pointer->next);
+			// printf("current free pointer: %d\n",current.free_pointer);
+			// printf("current free pointer next: %d\n",current.free_pointer->next);
 			
-			current.free_pointer->next = current.free_pointer + current.get_b();
-			
+			tempNode->next = current.free_pointer + current.get_b();
+			 
 			// printf("b: %d\n",current.get_b());
 			// printf("current free pointer: %d\n",current.free_pointer);
 			// printf("current free pointer next: %d\n",current.free_pointer->next);
 			
-			current.free_pointer = current.free_pointer->next;//current->b;//MP.b;
+			current.free_pointer = current.free_pointer + current.get_b();//current->b;//MP.b;
 			
 			// printf("b: %d\n",current.get_b());
 			// printf("current free pointer: %d\n",current.free_pointer);
@@ -129,10 +131,33 @@ void 	PrintList (){
 	
 	//MemoryPool* current = Tiers;//start at the beginning
 	
-	int i = 0;
-	for(i = 0;i<tier_size;++i){
-		//printf("i: %d\n",i);
+	//int i = 0;
+	
+	for(int i = 0;i<tier_size;++i){
+		cout<<"tier: "<<i<<endl;
+		Node* current = Tiers[i].mempool;//start at the beginning
+		while(current != Tiers[i].trailer){
+			cout<<"key: "<<current->key<<endl;
+			cout<<"Value: "<<current->value<<endl;
+			current += Tiers[i].get_b();
 		
+		cout<<endl;
+		/* cout<<"tier:"<<i<<"\n";
+		Node* current = Tiers[i].mempool;//start at the beginning
+		int j=0;
+		while(j<((Tiers[i].get_M()/Tiers[i].get_b()))){
+			if(current->next != NULL){
+				
+				//cout<<"i: "<<i<<endl;
+				cout<<"key: "<<current->key<<endl;
+				cout<<"Value: "<<current->value<<endl;
+				
+				
+			}
+
+		current+=Tiers[i].get_b();
+		j++; */
+		}
 	}
 	//int t = sizeof(Tiers);
 	printf("size of tiers: %d",tier_size);
