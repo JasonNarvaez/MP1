@@ -1,1 +1,2 @@
 # MP1
+This program implements a high performance linked list that avoids interactions with the memory manager on a per-operation basis. The first program creates first allocates a fixed amount of memory from the heap and then performs memory operations on that block of memory without having to interact with the heap. The second program creates a stratified linked list by organizing nodes into tiers based on the value of their key.
